@@ -1,17 +1,23 @@
 package com.mycompany.app;
 
-import com.mycompany.app.Board;
+import java.io.IOException;
 
 /**
- * Hello world!
- *
+ *  
+ *  To do:
+ *      Pretty print the board
+ *      ~~Implement player input to affect the board~~
+ *      Implement AI to play against
+ *      Lock out the command line except for keyboard interrupt to quit program
+ *      Write the tests for each class
+*
  */
+
 public class App 
 {
-    public static void main( String[] args )
+    public static void main( String[] args ) throws IOException, RuntimeException
     {
-        Board playSpace = new Board();
-        playSpace.printBoard();
+        Game gameLoop = new Game();
         System.out.println("Done!");
     }
 }

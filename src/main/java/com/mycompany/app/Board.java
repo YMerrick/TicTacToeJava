@@ -1,25 +1,21 @@
 package com.mycompany.app;
 
+import java.io.IOException;
+
 public class Board 
 {
-    private enum boardElementStatus {
-        O,
-        X,
-        N
-    }
-
-    private boardElementStatus[][] board;
+    private BoardElementStatus[][] board;
 
     public Board() {
-        board = new boardElementStatus[3][3];
+        board = new BoardElementStatus[3][3];
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                board[i][j] = boardElementStatus.N;
+                board[i][j] = BoardElementStatus.N;
             }
         }
     }
 
-    private String convBoardElement(boardElementStatus element) {
+    private String convBoardElement(BoardElementStatus element) {
         switch (element) {
             case N:
                 return "-";
@@ -39,5 +35,20 @@ public class Board
             }
             System.out.println();
         }
+    }
+
+    public void input(int x, int y, BoardElementStatus characterInput) throws IOException, RuntimeException {
+
+        if ((x < 1) || (x > 3)) {
+            throw new IOException("Please enter a value within 1 to 3");
+        }
+        if ((y < 1) || (y > 3)) {
+            throw new IOException("Please enter a value within 1 to 3");
+        }
+        if (board[x-1][y-1] != BoardElementStatus.N){
+            throw new RuntimeException("There is already an existing character there");
+        }
+
+        board[x-1][y-1] = characterInput;
     }
 }
