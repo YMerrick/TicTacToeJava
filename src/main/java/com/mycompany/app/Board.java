@@ -43,7 +43,7 @@ public class Board
                     System.out.print("|");
                     continue;
                 }
-                System.out.print(convBoardElement(board[i/3][j/3]));
+                System.out.print(convBoardElement(board[i/2][j/2]));
             }
             System.out.println();
         }
