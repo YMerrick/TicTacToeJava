@@ -8,6 +8,10 @@ public class Board
 
     public Board() {
         board = new BoardElementStatus[3][3];
+        initialiseBoard();
+    }
+
+    public void initialiseBoard () {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 board[i][j] = BoardElementStatus.N;
@@ -15,7 +19,7 @@ public class Board
         }
     }
 
-    private String convBoardElement(BoardElementStatus element) {
+    private String convBoardElement(BoardElementStatus element) throws RuntimeException {
         switch (element) {
             case N:
                 return "-";
@@ -29,9 +33,17 @@ public class Board
     }
 
     public void printBoard() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                System.out.print(convBoardElement(board[i][j]));
+        for (int i = 0; i < 5; i++) {
+            if ((i == 1) || (i == 3)) {
+                System.out.println("-+-+-");
+                continue;
+            }
+            for (int j = 0; j < 5; j++) {
+                if ((j == 1) || (j == 3)) { 
+                    System.out.print("|");
+                    continue;
+                }
+                System.out.print(convBoardElement(board[i/3][j/3]));
             }
             System.out.println();
         }

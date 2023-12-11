@@ -5,7 +5,7 @@ import java.io.IOException;
 /**
  *  
  *  To do:
- *      Pretty print the board
+ *      ~~Pretty print the board~~
  *      ~~Implement player input to affect the board~~
  *      Implement AI to play against
  *      Lock out the command line except for keyboard interrupt to quit program
