@@ -10,7 +10,7 @@ import java.io.IOException;
  *      Implement AI to play against
  *      Lock out the command line except for keyboard interrupt to quit program
  *      Write the tests for each class
-*
+ *
  */
 
 public class App 

@@ -19,10 +19,10 @@ public class Board
         }
     }
 
-    private String convBoardElement(BoardElementStatus element) throws RuntimeException {
+    public static String convBoardElement(BoardElementStatus element) throws RuntimeException {
         switch (element) {
             case N:
-                return "-";
+                return " ";
             case X:
                 return "X";
             case O:
@@ -33,11 +33,15 @@ public class Board
     }
 
     public void printBoard() {
+        System.out.println("y|x  1 2 3");
+        System.out.println(" |---------");
         for (int i = 0; i < 5; i++) {
             if ((i == 1) || (i == 3)) {
-                System.out.println("-+-+-");
+                System.out.println(" |   -+-+-");
                 continue;
             }
+            System.out.print((i/2) + 1);
+            System.out.print("|   ");
             for (int j = 0; j < 5; j++) {
                 if ((j == 1) || (j == 3)) { 
                     System.out.print("|");
