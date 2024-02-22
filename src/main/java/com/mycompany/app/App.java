@@ -18,7 +18,7 @@ public class App
 {
     public static void main( String[] args ) throws IOException, RuntimeException
     {
-        Game gameLoop = new Game();
+        Game gameInstance = new Game(2);
         System.out.println("Done!");
     }
 }

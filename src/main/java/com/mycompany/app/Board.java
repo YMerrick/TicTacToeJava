@@ -54,4 +54,8 @@ public class Board
 
         board[x-1][y-1] = characterInput;
     }
+
+    public BoardElementStatus getSquare(int i, int j) {
+        return board[i][j];
+    }
 }
