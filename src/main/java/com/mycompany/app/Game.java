@@ -6,6 +6,7 @@ import java.util.Scanner;
 /**
  *  
  *  To do:
+ *      Game loop 
  *      
  *
  */
@@ -17,11 +18,11 @@ public class Game {
     public Game() throws IOException {
         userInput = new Scanner(System.in);
         playSpace = new Board();
-        playSpace.printBoard();
-        Player player1 = new Player(BoardElementStatus.X, PlayerType.Player);
-        playerInput(player1);
-        playSpace.printBoard();
-        endGame();
+        //playSpace.printBoard();
+        //Player player1 = new Player(BoardElementStatus.X, PlayerType.Player);
+        //playerInput(player1);
+        //playSpace.printBoard();
+        //endGame();
     }
 
     private void endGame() {
@@ -64,7 +65,7 @@ public class Game {
         int i, j;
         switch (currentPlayer.getPlayerType()) {
             case Player:
-                System.out.println(String.format("Player %s:", Board.convBoardElement(currentPlayer.getBoardElement())));
+                System.out.println(String.format("Player %s:", currentPlayer.getBoardElement().getValue()));
 
                 i = xInput();
                 j = yInput();
@@ -85,5 +86,9 @@ public class Game {
             default:
                 break;
         }
+    }
+
+    public void startGame() {
+        
     }
 }

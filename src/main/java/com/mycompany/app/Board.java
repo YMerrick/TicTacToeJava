@@ -19,19 +19,6 @@ public class Board
         }
     }
 
-    public static String convBoardElement(BoardElementStatus element) throws RuntimeException {
-        switch (element) {
-            case N:
-                return " ";
-            case X:
-                return "X";
-            case O:
-                return "O";       
-            default:
-                throw new RuntimeException();
-        }
-    }
-
     public void printBoard() {
         System.out.println("y|x  1 2 3");
         System.out.println(" |---------");
@@ -47,7 +34,7 @@ public class Board
                     System.out.print("|");
                     continue;
                 }
-                System.out.print(convBoardElement(board[i/2][j/2]));
+                System.out.print(board[i/2][j/2].getValue());
             }
             System.out.println();
         }
