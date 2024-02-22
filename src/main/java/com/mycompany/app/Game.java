@@ -6,8 +6,8 @@ import java.util.Scanner;
 /**
  *  
  *  To do:
- *      Game loop 
- *      
+ *      ~~Game loop~~
+ *      Implement AI
  *
  */
 
@@ -22,16 +22,16 @@ public class Game {
         players = new Player[2];
         players[0] = new Player(BoardElementStatus.X, PlayerType.PLAYER);
         if (numOfPlayers == 2) players[1] = new Player(BoardElementStatus.O, PlayerType.PLAYER); else players[1] = new Player(BoardElementStatus.O, PlayerType.AI);
-        startGame();
-        //playSpace.printBoard();
-        //Player player1 = new Player(BoardElementStatus.X, PlayerType.Player);
-        //playerInput(player1);
-        //playSpace.printBoard();
     }
 
     private void endGame(Player winner, GameState state) {
-        
         userInput.close();
+        if (state == GameState.DRAW) {
+            System.out.println("The game was tied");
+        } else {
+            System.out.println(String.format("Player %s has won the game!",winner.getBoardElement().getValue()));
+        }
+
     }
 
     private void clearConsole() {
@@ -76,7 +76,7 @@ public class Game {
                 j = yInput();
 
                 try {
-                    playSpace.input(i, j, currentPlayer.getBoardElement());
+                    playSpace.input(j, i, currentPlayer.getBoardElement());
                 } catch (IOException ex) {
                     throw ex;
                 } catch (RuntimeException ex) {
@@ -154,16 +154,6 @@ public class Game {
         } while (pass);
     }
 
-/*
- *  Process:
- *      Player 1 is asked to take turn
- *      Player 1's input is verfied and asked to reinput if not correct
- *      Check if Player 1 won
- *      Player 2 is asked to take turn
- *      Player 2's input is verfied and asked to reinput if not correct
- *      Check if Player 2 won
- */
-
     public void startGame() {
         int id = 1;
         do {
@@ -174,8 +164,6 @@ public class Game {
 
         // Check for draw
         // If true then game is a draw
-        if (checkValidMove()) endGame(players[id], GameState.DRAW);
-        
-        endGame(players[id], GameState.WIN);
+        if (checkValidMove()) endGame(players[id], GameState.DRAW); else endGame(players[id], GameState.WIN);
     }
 }
