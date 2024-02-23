@@ -131,7 +131,7 @@ public class Game {
     }
 
     private boolean checkWin(Player currentPlayer) {
-        if (checkHorizontal(currentPlayer) || checkVertical(currentPlayer) || checkDiagonal(currentPlayer) || checkValidMove()) return true;
+        if (checkHorizontal(currentPlayer) || checkVertical(currentPlayer) || checkDiagonal(currentPlayer)) return true;
         return false;
     }
 
@@ -160,10 +160,10 @@ public class Game {
             if (id == 1) id = 0; else id = 1;
             playerTurn(id);
             clearConsole();
-        } while (checkWin(players[id]) == false);
+        } while ((checkWin(players[id]) == false) && (!checkValidMove()));
 
         // Check for draw
         // If true then game is a draw
-        if (checkValidMove()) endGame(players[id], GameState.DRAW); else endGame(players[id], GameState.WIN);
+        if (checkWin(players[id])) endGame(players[id], GameState.WIN); else endGame(players[id],GameState.DRAW);
     }
 }
