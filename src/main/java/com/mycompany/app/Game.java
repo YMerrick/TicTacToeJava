@@ -8,6 +8,7 @@ import java.util.Scanner;
  *  To do:
  *      ~~Game loop~~
  *      Implement AI
+ *      Move player input to the player object
  *
  */
 
@@ -20,12 +21,13 @@ public class Game {
         userInput = new Scanner(System.in);
         playSpace = new Board();
         players = new Player[2];
-        players[0] = new Player(BoardElementStatus.X, PlayerType.PLAYER);
-        if (numOfPlayers == 2) players[1] = new Player(BoardElementStatus.O, PlayerType.PLAYER); else players[1] = new Player(BoardElementStatus.O, PlayerType.AI);
+        players[0] = new Player(BoardElementStatus.X, PlayerType.PLAYER, userInput);
+        if (numOfPlayers == 2) players[1] = new Player(BoardElementStatus.O, PlayerType.PLAYER, userInput); else players[1] = new Player(BoardElementStatus.O, PlayerType.AI, userInput);
     }
 
     private void endGame(Player winner, GameState state) {
         userInput.close();
+        playSpace.printBoard();
         if (state == GameState.DRAW) {
             System.out.println("The game was tied");
         } else {
@@ -41,56 +43,6 @@ public class Game {
             else
                 Runtime.getRuntime().exec("clear");
         } catch (IOException | InterruptedException ex) {}
-    }
-
-    private int xInput() {
-        int number = -1;
-        System.out.print("Please input the x value: ");
-        try {
-            number = userInput.nextInt();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return number;
-    }
-
-    private int yInput() {
-        int number = -1;
-        System.out.print("Please input the y value: ");
-        try {
-            number = userInput.nextInt();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return number;
-    }
-
-    private void playerInput(Player currentPlayer) throws IOException, RuntimeException {
-        
-        int i, j;
-        switch (currentPlayer.getPlayerType()) {
-            case PLAYER:
-                System.out.println(String.format("Player %s:", currentPlayer.getBoardElement().getValue()));
-
-                i = xInput();
-                j = yInput();
-
-                try {
-                    playSpace.input(j, i, currentPlayer.getBoardElement());
-                } catch (IOException ex) {
-                    throw ex;
-                } catch (RuntimeException ex) {
-                    throw ex;
-                }
-                break;
-
-            case AI:
-                //Implement AI
-                break;
-
-            default:
-                break;
-        }
     }
 
     private boolean checkHorizontal(Player currentPlayer) {
@@ -135,14 +87,18 @@ public class Game {
         return false;
     }
 
-    private void playerTurn(int currentPlayer) {
+    private void playerTurn(Player currentPlayer) {
         boolean pass;
+        int[] input;
         do {
 
             playSpace.printBoard();
             pass = false;
+
+            input = currentPlayer.input(playSpace);
+
             try {
-                playerInput(players[currentPlayer]);
+                playSpace.input(input[0], input[1], currentPlayer.getBoardElement());
             } catch (IOException e) {
                 System.out.println(e.getMessage());
                 pass = true;
@@ -158,7 +114,7 @@ public class Game {
         int id = 1;
         do {
             if (id == 1) id = 0; else id = 1;
-            playerTurn(id);
+            playerTurn(players[id]);
             clearConsole();
         } while ((checkWin(players[id]) == false) && (!checkValidMove()));
 

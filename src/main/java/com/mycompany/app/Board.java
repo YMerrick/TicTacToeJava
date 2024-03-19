@@ -48,14 +48,20 @@ public class Board
         if ((y < 1) || (y > 3)) {
             throw new IOException("Please enter a value within 1 to 3");
         }
-        if (board[x-1][y-1] != BoardElementStatus.N){
+        if (board[y-1][x-1] != BoardElementStatus.N){
             throw new RuntimeException("There is already an existing character there");
         }
 
-        board[x-1][y-1] = characterInput;
+        board[y-1][x-1] = characterInput;
     }
 
     public BoardElementStatus getSquare(int i, int j) {
-        return board[i][j];
+        BoardElementStatus element = null;
+        try {
+            element = board[j][i];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
+        return element;
     }
 }
