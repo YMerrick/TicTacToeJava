@@ -6,7 +6,7 @@ public class Board
 {
     private BoardElementStatus[][] board;
 
-    public Board() {
+    Board() {
         board = new BoardElementStatus[3][3];
         initialiseBoard();
     }
@@ -17,6 +17,22 @@ public class Board
                 board[i][j] = BoardElementStatus.N;
             }
         }
+    }
+
+    public Board copy() {
+        Board newBoard = new Board();
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                try {
+                    newBoard.input(i+1, j+1, board[j][i]);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (RuntimeException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return newBoard;
     }
 
     public void printBoard() {
@@ -63,5 +79,53 @@ public class Board
             e.printStackTrace();
         }
         return element;
+    }
+
+    private boolean checkHorizontal(Player currentPlayer) {
+        BoardElementStatus curElement = currentPlayer.getBoardElement();
+        for (int i = 0; i < 3; i++) {
+            if ( (board[0][i] == curElement) && (board[1][i] == curElement) && (board[2][i] == curElement) ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkVertical(Player currentPlayer) {
+        BoardElementStatus curElement = currentPlayer.getBoardElement();
+        for (int j = 0; j < 3; j++) {
+            if ( (board[j][0] == curElement) && (board[j][1] == curElement) && (board[j][2] == curElement) ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkDiagonal(Player currentPlayer) {
+        BoardElementStatus curElement = currentPlayer.getBoardElement();
+        if ( (board[0][0] == curElement) && (board[1][1] == curElement) && (board[2][2] == curElement) ) return true;
+        if ( (board[0][2] == curElement) && (board[1][1] == curElement) && (board[2][0] == curElement) ) return true;
+        return false;
+    }
+
+    // Returning True means there are no more valid moves
+    public boolean checkValidMove() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[j][i] == BoardElementStatus.N) return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean checkWin(Player currentPlayer) {
+        if (checkHorizontal(currentPlayer) || checkVertical(currentPlayer) || checkDiagonal(currentPlayer)) return true;
+        return false;
+    }
+
+    // Returning true means game has reached a terminal state i.e. Someone has won or there are no more valid moves
+    public boolean checkTerminalState(Player currentPlayer) {
+        if (checkWin(currentPlayer) || (checkValidMove())) return true;
+        return false;
     }
 }

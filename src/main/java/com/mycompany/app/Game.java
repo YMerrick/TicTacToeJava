@@ -45,48 +45,6 @@ public class Game {
         } catch (IOException | InterruptedException ex) {}
     }
 
-    private boolean checkHorizontal(Player currentPlayer) {
-        BoardElementStatus curElement = currentPlayer.getBoardElement();
-        for (int i = 0; i < 3; i++) {
-            if ( (playSpace.getSquare(i, 0) == curElement) && (playSpace.getSquare(i, 1) == curElement) && (playSpace.getSquare(i, 2) == curElement) ) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    private boolean checkVertical(Player currentPlayer) {
-        BoardElementStatus curElement = currentPlayer.getBoardElement();
-        for (int j = 0; j < 3; j++) {
-            if ( (playSpace.getSquare(0, j) == curElement) && (playSpace.getSquare(1, j) == curElement) && (playSpace.getSquare(2, j) == curElement) ) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean checkDiagonal(Player currentPlayer) {
-        BoardElementStatus curElement = currentPlayer.getBoardElement();
-        if ( (playSpace.getSquare(0, 0) == curElement) && (playSpace.getSquare(1, 1) == curElement) && (playSpace.getSquare(2, 2) == curElement) ) return true;
-        if ( (playSpace.getSquare(0, 2) == curElement) && (playSpace.getSquare(1, 1) == curElement) && (playSpace.getSquare(2, 0) == curElement) ) return true;
-        return false;
-    }
-
-    // Returning True means there are no more valid moves
-    private boolean checkValidMove() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (playSpace.getSquare(i, j) == BoardElementStatus.N) return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean checkWin(Player currentPlayer) {
-        if (checkHorizontal(currentPlayer) || checkVertical(currentPlayer) || checkDiagonal(currentPlayer)) return true;
-        return false;
-    }
-
     private void playerTurn(Player currentPlayer) {
         boolean pass;
         int[] input;
@@ -116,10 +74,10 @@ public class Game {
             if (id == 1) id = 0; else id = 1;
             playerTurn(players[id]);
             clearConsole();
-        } while ((checkWin(players[id]) == false) && (!checkValidMove()));
+        } while (!playSpace.checkTerminalState(players[id]));
 
         // Check for draw
         // If true then game is a draw
-        if (checkWin(players[id])) endGame(players[id], GameState.WIN); else endGame(players[id],GameState.DRAW);
+        if (playSpace.checkWin(players[id])) endGame(players[id], GameState.WIN); else endGame(players[id], GameState.DRAW);
     }
 }
