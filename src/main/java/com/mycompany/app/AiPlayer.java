@@ -1,9 +1,5 @@
 package com.mycompany.app;
 
-import java.io.IOException;
-import java.util.Scanner;
-import java.util.stream.BaseStream;
-
 public class AiPlayer extends Player {
     AiPlayer(BoardElementStatus element, PlayerType player) {
         super(element, player);
@@ -104,13 +100,10 @@ public class AiPlayer extends Player {
         Board copy = currentBoard.copy();
         int[] output;
 
-        boolean found = false;
         output = new int[]{-1, -1};
         for (i = 0; i < 3; i++) {
             for (j = 0; j < 3; j++) {
                 if (copy.getSquare(i, j) == BoardElementStatus.N) {
-
-                    found = true;
 
                     copy.set(i+1,j+1,assignedElement);
 

@@ -21,8 +21,8 @@ public class Game {
         userInput = new Scanner(System.in);
         playSpace = new Board();
         players = new Player[2];
-        players[1] = new HumanPlayer(BoardElementStatus.X, PlayerType.PLAYER, userInput);
-        players[0] = (numOfPlayers == 2)
+        players[0] = new HumanPlayer(BoardElementStatus.X, PlayerType.PLAYER, userInput);
+        players[1] = (numOfPlayers == 2)
             ? new HumanPlayer(BoardElementStatus.O, PlayerType.PLAYER, userInput)
             : new AiPlayer(BoardElementStatus.O, PlayerType.AI);
         //if (numOfPlayers == 2) players[1] = new HumanPlayer(BoardElementStatus.O, PlayerType.PLAYER, userInput); else players[1] = new AiPlayer(BoardElementStatus.O, PlayerType.AI);
