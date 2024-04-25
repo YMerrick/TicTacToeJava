@@ -21,8 +21,8 @@ public class Game {
         userInput = new Scanner(System.in);
         playSpace = new Board();
         players = new Player[2];
-        players[0] = new HumanPlayer(BoardElementStatus.X, PlayerType.PLAYER, userInput);
-        players[1] = (numOfPlayers == 2)
+        players[1] = new HumanPlayer(BoardElementStatus.X, PlayerType.PLAYER, userInput);
+        players[0] = (numOfPlayers == 2)
             ? new HumanPlayer(BoardElementStatus.O, PlayerType.PLAYER, userInput)
             : new AiPlayer(BoardElementStatus.O, PlayerType.AI);
         //if (numOfPlayers == 2) players[1] = new HumanPlayer(BoardElementStatus.O, PlayerType.PLAYER, userInput); else players[1] = new AiPlayer(BoardElementStatus.O, PlayerType.AI);
@@ -77,10 +77,10 @@ public class Game {
             if (id == 1) id = 0; else id = 1;
             playerTurn(players[id]);
             clearConsole();
-        } while (!playSpace.checkTerminalState(players[id]));
+        } while (!playSpace.checkTerminalState(players[id].getBoardElement()));
 
         // Check for draw
         // If true then game is a draw
-        if (playSpace.checkWin(players[id])) endGame(players[id], GameState.WIN); else endGame(players[id], GameState.DRAW);
+        if (playSpace.checkWin(players[id].getBoardElement())) endGame(players[id], GameState.WIN); else endGame(players[id], GameState.DRAW);
     }
 }

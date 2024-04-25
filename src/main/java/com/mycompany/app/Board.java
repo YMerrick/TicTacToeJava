@@ -71,6 +71,10 @@ public class Board
         board[y-1][x-1] = characterInput;
     }
 
+    public void set(int x, int y, BoardElementStatus characterInput) {
+        board[y-1][x-1] = characterInput;
+    }
+
     public BoardElementStatus getSquare(int i, int j) {
         BoardElementStatus element = null;
         try {
@@ -81,30 +85,27 @@ public class Board
         return element;
     }
 
-    private boolean checkHorizontal(Player currentPlayer) {
-        BoardElementStatus curElement = currentPlayer.getBoardElement();
+    private boolean checkHorizontal(BoardElementStatus currentPlayer) {
         for (int i = 0; i < 3; i++) {
-            if ( (board[0][i] == curElement) && (board[1][i] == curElement) && (board[2][i] == curElement) ) {
+            if ( (board[0][i] == currentPlayer) && (board[1][i] == currentPlayer) && (board[2][i] == currentPlayer) ) {
                 return true;
             }
         }
         return false;
     }
 
-    private boolean checkVertical(Player currentPlayer) {
-        BoardElementStatus curElement = currentPlayer.getBoardElement();
+    private boolean checkVertical(BoardElementStatus currentPlayer) {
         for (int j = 0; j < 3; j++) {
-            if ( (board[j][0] == curElement) && (board[j][1] == curElement) && (board[j][2] == curElement) ) {
+            if ( (board[j][0] == currentPlayer) && (board[j][1] == currentPlayer) && (board[j][2] == currentPlayer) ) {
                 return true;
             }
         }
         return false;
     }
 
-    private boolean checkDiagonal(Player currentPlayer) {
-        BoardElementStatus curElement = currentPlayer.getBoardElement();
-        if ( (board[0][0] == curElement) && (board[1][1] == curElement) && (board[2][2] == curElement) ) return true;
-        if ( (board[0][2] == curElement) && (board[1][1] == curElement) && (board[2][0] == curElement) ) return true;
+    private boolean checkDiagonal(BoardElementStatus currentPlayer) {
+        if ( (board[0][0] == currentPlayer) && (board[1][1] == currentPlayer) && (board[2][2] == currentPlayer) ) return true;
+        if ( (board[0][2] == currentPlayer) && (board[1][1] == currentPlayer) && (board[2][0] == currentPlayer) ) return true;
         return false;
     }
 
@@ -118,13 +119,13 @@ public class Board
         return true;
     }
 
-    public boolean checkWin(Player currentPlayer) {
+    public boolean checkWin(BoardElementStatus currentPlayer) {
         if (checkHorizontal(currentPlayer) || checkVertical(currentPlayer) || checkDiagonal(currentPlayer)) return true;
         return false;
     }
 
     // Returning true means game has reached a terminal state i.e. Someone has won or there are no more valid moves
-    public boolean checkTerminalState(Player currentPlayer) {
+    public boolean checkTerminalState(BoardElementStatus currentPlayer) {
         if (checkWin(currentPlayer) || (checkValidMove())) return true;
         return false;
     }
